@@ -1,0 +1,17 @@
+# RAGAdvanced overlay on the upstream quickstart (left unmodified so it can be re-downloaded).
+#   docker compose -f docker-compose.quickstart.yml -f docker-compose.rag.yml up -d
+services:
+  litellm:
+    command: ["--config", "/app/rag-config/config.yaml"]
+    environment:
+      GOOGLE_APPLICATION_CREDENTIALS: /var/secrets/gcp/adc.json
+      VERTEX_PROJECT: ${VERTEX_PROJECT:?set it in .env}
+      VERTEX_LOCATION: ${VERTEX_LOCATION:-us-east1}
+    volumes:
+      # Mount the folder, not the file: single-file bind mounts go stale when an editor
+      # or git replaces config.yaml, and the gateway then fails with a misleading 503.
+      - ./config:/app/rag-config:ro
+      # gcloud Application Default Credentials, read-only. Kept as a single-file mount so the
+      # container sees only this credential; recreate the container after re-running
+      # `gcloud auth application-default login`.
+      - ${GCLOUD_ADC_PATH:-~/.config/gcloud/application_default_credentials.json}:/var/secrets/gcp/adc.json:ro

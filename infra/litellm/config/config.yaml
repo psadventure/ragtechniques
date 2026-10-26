@@ -1,0 +1,29 @@
+# LiteLLM gateway models for RAGAdvanced.
+# `model_name` is the alias clients call; it must match aliases in
+# vectorstore/embedder.py (embeddings) and RAG_CHAT_MODEL (chat).
+# Auth: Application Default Credentials mounted by docker-compose.rag.yml.
+
+x-vertex: &vertex
+  vertex_project: os.environ/VERTEX_PROJECT
+  vertex_location: os.environ/VERTEX_LOCATION
+
+model_list:
+  # ── chat ──
+  - model_name: gemini-2.5-flash
+    litellm_params: { model: vertex_ai/gemini-2.5-flash, <<: *vertex }
+  # Disabled by default: not every project/region has access (Vertex returns 404 when it
+  # doesn't — e.g. Model Garden terms or org policy). Uncomment if yours does; if it is not
+  # served in your region, try `vertex_location: global` for this entry.
+  # - model_name: gemini-2.5-pro
+  #   litellm_params: { model: vertex_ai/gemini-2.5-pro, <<: *vertex }
+
+  # ── embeddings ──
+  - model_name: text-embedding-005
+    litellm_params: { model: vertex_ai/text-embedding-005, <<: *vertex }
+    model_info: { mode: embedding }
+  - model_name: gemini-embedding-001
+    litellm_params: { model: vertex_ai/gemini-embedding-001, <<: *vertex }
+    model_info: { mode: embedding }
+
+litellm_settings:
+  drop_params: true   # silently drop OpenAI params Vertex doesn't support

@@ -1,0 +1,13 @@
+openai
+anthropic
+chromadb
+sentence-transformers
+langgraph
+langchain-core
+rank-bm25
+python-dotenv
+typing-extensions
+pytest
+google-adk>=2.13,<3
+litellm>=1.106
+mcp>=2.3   # litellm imports it when tools are passed
