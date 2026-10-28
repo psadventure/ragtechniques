@@ -46,6 +46,10 @@ on the same Markdown docs. Driven by demo scripts or a Google ADK agent; all hos
   Chat attachments become session artifacts via `SaveFilesAsArtifactsPlugin(attach_file_reference=False)`
   and `save_uploaded_file` reads them, so file bytes never go through LiteLLM.
 - **`mcp` is a direct dependency** only because litellm imports it when tools are passed.
+- **ADK Eval deps listed by hand, not `google-adk[eval]`.** The extra pulls `google-cloud-aiplatform[evaluation]`,
+  which caps litellm `<1.97` and conflicts with `litellm>=1.106`. `requirements.txt` lists the extra's packages
+  with plain `google-cloud-aiplatform` instead; every ADK eval metric still loads. Run history lives in
+  `agent/rag_agent/.adk/` (gitignored); `agent/rag_agent/eval_set_1.evalset.json` is a committed sample eval set.
 - **Public repo hygiene.** MIT licensed. `docs/` holds only original, fictional sample docs (Kestrel bank
   platform, API, Project Heron timeline) with planted lessons: a stale go-live date (overview vs timeline),
   an unanswerable pricing question, and a webhook query where hybrid loses to semantic because of the naive
