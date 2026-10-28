@@ -1,0 +1,1271 @@
+{
+  "eval_set_id": "eval_set_1",
+  "name": "eval_set_1",
+  "eval_cases": [
+    {
+      "eval_id": "hello",
+      "conversation": [
+        {
+          "invocation_id": "e-9d5c4ebb-1b17-41ae-84d5-d3d30ccfc521",
+          "user_content": {
+            "parts": [
+              {
+                "text": "hello"
+              }
+            ],
+            "role": "user"
+          },
+          "final_response": {
+            "parts": [
+              {
+                "text": "Hello! I'm RAG Lab, your guide to Retrieval-Augmented Generation. I can help you experiment with different chunking strategies, embedders, and retrievers on your own Markdown documents.\n\nTo get started, you can:\n\n*   `list_options()`: See what chunking strategies, embedders, retrievers, and documents are available.\n*   `ingest_documents()`: Process your documents and make them searchable.\n*   `upload_document()`: Upload a Markdown document you have.\n*   `save_uploaded_file()`: Save a file you've attached to our chat.\n\nWhat would you like to explore first?\n"
+              }
+            ],
+            "role": "model"
+          },
+          "intermediate_data": {
+            "invocation_events": [
+              {
+                "author": "rag_lab",
+                "usage_metadata": {
+                  "cached_content_token_count": 0,
+                  "candidates_token_count": 141,
+                  "prompt_token_count": 1211,
+                  "total_token_count": 1352
+                },
+                "model_version": "gemini-2.5-flash"
+              }
+            ]
+          },
+          "creation_timestamp": 1793140606.145505
+        },
+        {
+          "invocation_id": "e-26ef37fa-268e-40f1-b2a9-3dc0b6363d66",
+          "user_content": {
+            "parts": [
+              {
+                "text": "list_options()"
+              }
+            ],
+            "role": "user"
+          },
+          "final_response": {
+            "parts": [
+              {
+                "text": "Here's what's available:\n\n**Documents:**\n*   `kestrel_api_reference.md`\n*   `kestrel_platform_overview.md`\n*   `project_heron_timeline.md`\n\n**Chunking Strategies:**\n*   **Character:** Chunks by fixed character windows (default `chunk_size=500`, `overlap=50`). This is a basic method and can break code blocks or tables.\n*   **Structure:** Chunks based on Markdown structure (default `max_words=400`). Aims to keep code blocks and tables intact.\n\n**Embedders:**\n*   **minilm:** Local, fast, small (384 dimensions).\n*   **text-embedding-005:** Vertex AI, English/code tuned (768 dimensions).\n*   **gemini-embedding-001:** Vertex AI, highest quality but slower (3072 dimensions).\n\n**Retrievers:**\n*   **semantic:** Uses dense vector similarity.\n*   **bm25:** Uses keyword ranking.\n*   **hybrid:** Combines BM25 and semantic retrieval using Reciprocal Rank Fusion.\n\n**Existing Collections:**\n*   `character__text-embedding-005`: 66 chunks, using 'character' strategy with `chunk_size=500`, `overlap=50`, and 'text-embedding-005' embedder.\n*   `structure__text-embedding-005`: 40 chunks, using 'structure' strategy with `max_words=400`, and 'text-embedding-005' embedder.\n\nWhat would you like to do next? You could try:\n*   Ingesting one of the documents with a different strategy or embedder.\n*   Comparing the chunking of a document.\n*   Searching an existing collection.\n"
+              }
+            ],
+            "role": "model"
+          },
+          "intermediate_data": {
+            "invocation_events": [
+              {
+                "author": "rag_lab",
+                "content": {
+                  "parts": [
+                    {
+                      "function_call": {
+                        "id": "call_0e11efe0836744f2a24abbcddd24",
+                        "args": {},
+                        "name": "list_options"
+                      },
+                      "thought_signature": "AY89a19I8qyrGAWE8GKGqOIAAaCfQ232mTzNe3MxSTaUH5JwDwRq2WitMqfmJ4FerqZQqYb6CPFRBYxo9eJs4T53deZdj4yuQ_iUQxoUqdpINZ0iel32rsSCRK1PnkfQ5_qFxt72K4wEZujDDn-cV4GzNirvq68vPy9OrQL2J_FzlNZ4w-AepoB1daZ-_BO_qNyPWc1DmYaxRZUro-wXrFgB_7xHmeqiO5ZvoatvYaLA_lWNCVPhI3nFQjNFQOrMLHheU6rjs4HABstF0YVmEe4eXfBgN2nRsCJ3N4euQj56MDqDKPdZwbuFNSF6DBw="
+                    }
+                  ],
+                  "role": "model"
+                },
+                "usage_metadata": {
+                  "cached_content_token_count": 1148,
+                  "candidates_token_count": 42,
+                  "prompt_token_count": 1356,
+                  "thoughts_token_count": 32,
+                  "total_token_count": 1398
+                },
+                "model_version": "gemini-2.5-flash"
+              },
+              {
+                "author": "rag_lab",
+                "content": {
+                  "parts": [
+                    {
+                      "function_response": {
+                        "id": "call_0e11efe0836744f2a24abbcddd24",
+                        "name": "list_options",
+                        "response": {
+                          "strategies": [
+                            {
+                              "name": "character",
+                              "description": "Fixed-size character windows with overlap. Ignores sentences, sections, code blocks and tables — the 'bad' baseline.",
+                              "defaults": {
+                                "chunk_size": 500,
+                                "overlap": 50
+                              }
+                            },
+                            {
+                              "name": "structure",
+                              "description": "Markdown structure-based: split at ## headers, and split sections longer than max_words again at ### headers. Keeps code blocks and tables intact.",
+                              "defaults": {
+                                "max_words": 400
+                              }
+                            }
+                          ],
+                          "embedders": [
+                            {
+                              "alias": "minilm",
+                              "provider": "local",
+                              "model": "all-MiniLM-L6-v2",
+                              "description": "Local sentence-transformers all-MiniLM-L6-v2 (384 dims). Offline, fast, small."
+                            },
+                            {
+                              "alias": "text-embedding-005",
+                              "provider": "litellm",
+                              "model": "text-embedding-005",
+                              "description": "Vertex AI text-embedding-005 (768 dims) via LiteLLM. English/code tuned."
+                            },
+                            {
+                              "alias": "gemini-embedding-001",
+                              "provider": "litellm",
+                              "model": "gemini-embedding-001",
+                              "description": "Vertex AI gemini-embedding-001 (3072 dims) via LiteLLM. Strongest quality, slower."
+                            }
+                          ],
+                          "retrievers": [
+                            {
+                              "name": "semantic",
+                              "description": "Dense vector similarity (cosine) using the collection's embedder."
+                            },
+                            {
+                              "name": "bm25",
+                              "description": "Sparse keyword ranking (BM25 Okapi) over chunk text. No embeddings."
+                            },
+                            {
+                              "name": "hybrid",
+                              "description": "BM25 + semantic merged with Reciprocal Rank Fusion (k=60)."
+                            }
+                          ],
+                          "documents": [
+                            {
+                              "name": "kestrel_api_reference.md",
+                              "bytes": 9845
+                            },
+                            {
+                              "name": "kestrel_platform_overview.md",
+                              "bytes": 11758
+                            },
+                            {
+                              "name": "project_heron_timeline.md",
+                              "bytes": 8219
+                            }
+                          ],
+                          "collections": [
+                            {
+                              "name": "character__text-embedding-005",
+                              "count": 66,
+                              "strategy": "character",
+                              "embedder": "text-embedding-005",
+                              "embedder_model": "text-embedding-005",
+                              "params": {
+                                "chunk_size": 500,
+                                "overlap": 50
+                              }
+                            },
+                            {
+                              "name": "structure__text-embedding-005",
+                              "count": 40,
+                              "strategy": "structure",
+                              "embedder": "text-embedding-005",
+                              "embedder_model": "text-embedding-005",
+                              "params": {
+                                "max_words": 400
+                              }
+                            }
+                          ]
+                        }
+                      }
+                    }
+                  ],
+                  "role": "user"
+                }
+              },
+              {
+                "author": "rag_lab",
+                "usage_metadata": {
+                  "cached_content_token_count": 0,
+                  "candidates_token_count": 486,
+                  "prompt_token_count": 1788,
+                  "thoughts_token_count": 76,
+                  "total_token_count": 2274
+                },
+                "model_version": "gemini-2.5-flash"
+              }
+            ]
+          },
+          "creation_timestamp": 1793140614.732812
+        },
+        {
+          "invocation_id": "e-55af5e47-3ede-420b-a897-2f8306b10e05",
+          "user_content": {
+            "parts": [
+              {
+                "text": "ingest with gemini-embedding-001 using structure"
+              }
+            ],
+            "role": "user"
+          },
+          "final_response": {
+            "parts": [
+              {
+                "text": "I've ingested all documents using the `structure` chunking strategy (with `max_words=400`) and the `gemini-embedding-001` embedder. This created a new collection named `structure__gemini-embedding-001` with 40 chunks.\n\nThe `structure` strategy aims to keep code blocks and tables intact, which is generally good for RAG quality. `gemini-embedding-001` is the strongest quality embedder available, but it's also the slowest.\n\nWhat's next? You could try:\n*   `compare_retrieval()` to see how this new collection performs against the others for a given query.\n*   `inspect_collection()` to look at the chunks within `structure__gemini-embedding-001`.\n*   Ingesting with a different chunking strategy, like `character`, to compare."
+              }
+            ],
+            "role": "model"
+          },
+          "intermediate_data": {
+            "invocation_events": [
+              {
+                "author": "rag_lab",
+                "content": {
+                  "parts": [
+                    {
+                      "function_call": {
+                        "id": "call_8d81b9258bb54b968300e05f9ddb",
+                        "args": {
+                          "embedders": [
+                            "gemini-embedding-001"
+                          ],
+                          "strategies": [
+                            "structure"
+                          ]
+                        },
+                        "name": "ingest_documents"
+                      },
+                      "thought_signature": "AY89a19eK9OdivJdrzdJ3cfcWr-k4B9C5N4ZrO4G9x2HkV_pc2y8Tx-xeuSnwS8zTeAyIWDCEZIrJ4XWb2ZfhQgwc63u9EauIaNvFczcuLkHG5XJbvSx3mVch62421HxUkEbygFq_joUDENbFOaDtyduHcKGbvsKnqgaEjLtPpex-0j_Vbw3AW39b0nuxEnNJBRtHHbSKjeCTRZ-8FhyXkPKNQoThvC3LFmdkrfhAZxOXwTDolAoWr1JKEAWCWTYx6FaXK-ulFREcd7Cu4o3b_Up7aEiIeQcAYenXkhIOEeGVJwu0gNwKZtbrPYDGqgoXznbBfWXztlh2vmM3meoBgl9FLieFGcODHgRK8u19gNBOYYn16y9pgcTBHhg8Iv6fzbAUdVwjUuNKLnS2RsD_kPsKFDUotlqD1YKf5L8z5u6NxRbxl9scoteLdDzvTbFChy3riEN-25pVkICdhoYzoLUdn8SPBUvWyzdRmZmzFAZFt4ZhHuPkCTn0knfCuJ-Yw5ajprlMC0VFG3ArweojUHZzm3i7tnhrLUSc1i_LYYm80CmbdC0bjTk3N9Z36ov77r8LmyokIGcBzv2HFeTnCGOId7zhRdBq97jeNHuVEY9OiD7QTJa2omX"
+                    }
+                  ],
+                  "role": "model"
+                },
+                "usage_metadata": {
+                  "cached_content_token_count": 1277,
+                  "candidates_token_count": 114,
+                  "prompt_token_count": 2179,
+                  "thoughts_token_count": 87,
+                  "total_token_count": 2293
+                },
+                "model_version": "gemini-2.5-flash"
+              },
+              {
+                "author": "rag_lab",
+                "content": {
+                  "parts": [
+                    {
+                      "function_response": {
+                        "id": "call_8d81b9258bb54b968300e05f9ddb",
+                        "name": "ingest_documents",
+                        "response": {
+                          "collections": [
+                            {
+                              "collection": "structure__gemini-embedding-001",
+                              "strategy": "structure",
+                              "embedder": "gemini-embedding-001",
+                              "params": {
+                                "max_words": 400
+                              },
+                              "total_chunks_stored": 40,
+                              "removed_documents": [],
+                              "total_chunks": 40,
+                              "avg_words": 113.8,
+                              "broken_code_blocks": 0,
+                              "broken_tables": 0
+                            }
+                          ],
+                          "errors": []
+                        }
+                      }
+                    }
+                  ],
+                  "role": "user"
+                }
+              },
+              {
+                "author": "rag_lab",
+                "usage_metadata": {
+                  "cached_content_token_count": 1280,
+                  "candidates_token_count": 194,
+                  "prompt_token_count": 2343,
+                  "total_token_count": 2537
+                },
+                "model_version": "gemini-2.5-flash"
+              }
+            ]
+          },
+          "creation_timestamp": 1793140659.85057
+        },
+        {
+          "invocation_id": "e-ab6b51a1-b49e-4d3b-9251-19ba9df9754a",
+          "user_content": {
+            "parts": [
+              {
+                "text": "inspect"
+              }
+            ],
+            "role": "user"
+          },
+          "final_response": {
+            "parts": [
+              {
+                "text": "Which collection would you like to inspect? Please provide the full collection name. You can use `list_collections()` to see available options."
+              }
+            ],
+            "role": "model"
+          },
+          "intermediate_data": {
+            "invocation_events": [
+              {
+                "author": "rag_lab",
+                "usage_metadata": {
+                  "cached_content_token_count": 0,
+                  "candidates_token_count": 28,
+                  "prompt_token_count": 2451,
+                  "total_token_count": 2479
+                },
+                "model_version": "gemini-2.5-flash"
+              }
+            ]
+          },
+          "creation_timestamp": 1793140721.532628
+        },
+        {
+          "invocation_id": "e-c9183b2e-0b7d-4ff5-97c8-f84a24a72b1f",
+          "user_content": {
+            "parts": [
+              {
+                "text": "list_collections()"
+              }
+            ],
+            "role": "user"
+          },
+          "final_response": {
+            "parts": [
+              {
+                "text": "Here are the available collections:\n\n*   `character__text-embedding-005` (66 chunks, character strategy, text-embedding-005 embedder)\n*   `structure__gemini-embedding-001` (40 chunks, structure strategy, gemini-embedding-001 embedder)\n*   `structure__text-embedding-005` (40 chunks, structure strategy, text-embedding-005 embedder)\n\nWhich one would you like to inspect?"
+              }
+            ],
+            "role": "model"
+          },
+          "intermediate_data": {
+            "invocation_events": [
+              {
+                "author": "rag_lab",
+                "content": {
+                  "parts": [
+                    {
+                      "function_call": {
+                        "id": "call_1759b909dce541fea04cc932873e",
+                        "args": {},
+                        "name": "list_collections"
+                      },
+                      "thought_signature": "AY89a18kavTVF2pMTvPFfBe2NcfizbATSNzocSDaE3AvSksqRqbcUel2oA8KYrOBtaOUG6_xFUyq5pSmvDR12lg_lJKzonKJsJuQRuue3vHEdzDdsMsyfUSrqHnEgg4VODv8Cn_pr54wQyUyyuxlTnuj8Y2nAyuoK6yVnzwsMD4S7Y4y_BtXWiAQnFVwIjmvDBYwKLoGbBGMn658-L5GJlUuQAVTKH4qvRYOhIt_Rji6IXnpZJ7Six5SWtVjZ7VKnhV81-dQk6dXV6orneAyTLqvX9gRm3qCvXe9-vofq537aTb-izIULjI5UpBJhnsGxKpweUGgVcMVMomw6wC8siYYoaMY2ys="
+                    }
+                  ],
+                  "role": "model"
+                },
+                "usage_metadata": {
+                  "cached_content_token_count": 0,
+                  "candidates_token_count": 47,
+                  "prompt_token_count": 2483,
+                  "thoughts_token_count": 37,
+                  "total_token_count": 2530
+                },
+                "model_version": "gemini-2.5-flash"
+              },
+              {
+                "author": "rag_lab",
+                "content": {
+                  "parts": [
+                    {
+                      "function_response": {
+                        "id": "call_1759b909dce541fea04cc932873e",
+                        "name": "list_collections",
+                        "response": {
+                          "result": [
+                            {
+                              "name": "character__text-embedding-005",
+                              "count": 66,
+                              "strategy": "character",
+                              "embedder": "text-embedding-005",
+                              "embedder_model": "text-embedding-005",
+                              "params": {
+                                "chunk_size": 500,
+                                "overlap": 50
+                              }
+                            },
+                            {
+                              "name": "structure__gemini-embedding-001",
+                              "count": 40,
+                              "strategy": "structure",
+                              "embedder": "gemini-embedding-001",
+                              "embedder_model": "gemini-embedding-001",
+                              "params": {
+                                "max_words": 400
+                              }
+                            },
+                            {
+                              "name": "structure__text-embedding-005",
+                              "count": 40,
+                              "strategy": "structure",
+                              "embedder": "text-embedding-005",
+                              "embedder_model": "text-embedding-005",
+                              "params": {
+                                "max_words": 400
+                              }
+                            }
+                          ]
+                        }
+                      }
+                    }
+                  ],
+                  "role": "user"
+                }
+              },
+              {
+                "author": "rag_lab",
+                "usage_metadata": {
+                  "cached_content_token_count": 0,
+                  "candidates_token_count": 113,
+                  "prompt_token_count": 2649,
+                  "total_token_count": 2762
+                },
+                "model_version": "gemini-2.5-flash"
+              }
+            ]
+          },
+          "creation_timestamp": 1793140738.620088
+        },
+        {
+          "invocation_id": "e-03a5c09b-1cfa-4132-a466-0945b7ebd271",
+          "user_content": {
+            "parts": [
+              {
+                "text": "structure__gemini-embedding-001"
+              }
+            ],
+            "role": "user"
+          },
+          "final_response": {
+            "parts": [
+              {
+                "text": "Here's an inspection of the `structure__gemini-embedding-001` collection:\n\n**Collection Stats:**\n*   **Total Chunks:** 40\n*   **Embedder:** `gemini-embedding-001` (3072 dimensions)\n*   **Chunking Strategy:** `structure` (max_words=400)\n*   **Average Words per Chunk:** 113.8\n*   **Min Words per Chunk:** 29\n*   **Max Words per Chunk:** 269\n*   **Broken Code Blocks/Tables:** 0 (This is expected for the 'structure' strategy)\n\n**Chunks per Document:**\n*   `kestrel_api_reference.md`: 12 chunks\n*   `kestrel_platform_overview.md`: 13 chunks\n*   `project_heron_timeline.md`: 15 chunks\n\n**Sample Chunks:**\n1.  **kestrel_api_reference.md | Kestrel API Reference (v2)**\n    > # Kestrel API Reference (v2)\n    >\n    > > **Fictional sample document.** Kestrel and every endpoint, error code and value in this file are invented for RAG experiments. Hostnames use the reserved `.example` domain and do not resolve.\n    >\n    > The Kestrel API gives programmatic access to accounts, transfers and events…\n2.  **kestrel_api_reference.md | 1. Overview**\n    > ## 1. Overview\n    >\n    > | Environment | Base URL | Data |\n    > |---|---|---|\n    > | Sandbox | `https://sandbox.api.kestrel.example/v2` | Synthetic accounts, no real money |\n    > | Production | `https://api.kestrel.example/v2` | Live member data |\n    >\n    > General conventions:\n    >\n    > - All requests and responses use JSON with UTF-8 enco…\n3.  **kestrel_api_reference.md | 2. Authentication**\n    > ## 2. Authentication\n    >\n    > Kestrel uses the OAuth 2.0 client-credentials flow. Each integration is registered in the back-office console and receives a client ID and client secret. Exchange them for an access token at the token endpoint:\n    >\n    > ```bash\n    > curl -X POST https://sandbox.api.kestrel.example/oauth/tok…\n4.  **kestrel_api_reference.md | 3. Accounts API**\n    > ## 3. Accounts API\n    >\n    > | Method | Path | Description |\n    > |---|---|---|\n    > | GET | `/accounts` | List accounts visible to the client |\n    > | GET | `/accounts/{account_id}` | Get one account |\n    > | GET | `/accounts/{account_id}/balances` | Current, available and pending balances |\n    > | GET | `/accounts/{account_id}/tra…\n5.  **kestrel_api_reference.md | 4. Transfers API**\n    > ## 4. Transfers API\n    >\n    > Transfers move money out of a member\\'s account over one of four rails. Creating a transfer is asynchronous: the API returns immediately with a status, and the final outcome arrives by webhook or by polling.\n\nThis collection uses the structure-based chunking strategy, which means chunks are split at header levels, and code blocks and tables are kept intact. The `gemini-embedding-001` embedder is known for its quality, which should lead to good semantic search results.\n\nWhat would you like to do next? You could:\n*   `search()` this collection with a query.\n*   `compare_retrieval()` across this and other collections to see how different embedders or chunking strategies impact results."
+              }
+            ],
+            "role": "model"
+          },
+          "intermediate_data": {
+            "invocation_events": [
+              {
+                "author": "rag_lab",
+                "content": {
+                  "parts": [
+                    {
+                      "function_call": {
+                        "id": "call_6dbdf052e27b4824a354837a4e3e",
+                        "args": {
+                          "name": "structure__gemini-embedding-001"
+                        },
+                        "name": "inspect_collection"
+                      },
+                      "thought_signature": "AY89a18UKw5cofAegzysUZ72VGJnxrcMUGtCikpVX8bEOfVzXt4OVwhszCOq4zZYPYeuYdJaNGmxiJApCuU2a4GVo-02uNzqisiAxN28UFNDaztQJm2B97IHe8HokM3A8ZBZ65RKpXMghfdewc2XRMyqhmdw-z1a6_9aaO13seRDc9tIL2OsZf-5N7rkkYf1bUi_Sby7aLQ8xWlLGaGl_15-yt3thDL2Gny5lc-_gzRrdOqZK2dQImWVveBLH44Tm-nXuLNjF4J2dzKU_AT6D2KyDBMO91vGnNgJOaZ6xIqhslkgM8MsefgfJpynKg=="
+                    }
+                  ],
+                  "role": "model"
+                },
+                "usage_metadata": {
+                  "cached_content_token_count": 0,
+                  "candidates_token_count": 57,
+                  "prompt_token_count": 2735,
+                  "thoughts_token_count": 34,
+                  "total_token_count": 2792
+                },
+                "model_version": "gemini-2.5-flash"
+              },
+              {
+                "author": "rag_lab",
+                "content": {
+                  "parts": [
+                    {
+                      "function_response": {
+                        "id": "call_6dbdf052e27b4824a354837a4e3e",
+                        "name": "inspect_collection",
+                        "response": {
+                          "name": "structure__gemini-embedding-001",
+                          "strategy": "structure",
+                          "embedder": "gemini-embedding-001",
+                          "embedding_dim": 3072,
+                          "params": {
+                            "max_words": 400
+                          },
+                          "count": 40,
+                          "chunks_per_document": {
+                            "kestrel_api_reference.md": 12,
+                            "kestrel_platform_overview.md": 13,
+                            "project_heron_timeline.md": 15
+                          },
+                          "avg_words": 113.8,
+                          "min_words": 29,
+                          "max_words": 269,
+                          "broken_code_blocks": 0,
+                          "chunks": [
+                            {
+                              "id": "kestrel_api_reference.md_0",
+                              "section": "Kestrel API Reference (v2)",
+                              "metadata": {
+                                "chunk_index": 0,
+                                "doc_title": "kestrel_api_reference.md",
+                                "word_count": 65,
+                                "section_title": "Kestrel API Reference (v2)",
+                                "subsection_title": "",
+                                "strategy": "structure"
+                              },
+                              "content": "# Kestrel API Reference (v2)\n\n> **Fictional sample document.** Kestrel and every endpoint, error code and value in this file are invented for RAG experiments. Hostnames use the reserved `.example` domain and do not resolve.\n\nThe Kestrel API gives programmatic access to accounts, transfers and events…"
+                            },
+                            {
+                              "id": "kestrel_api_reference.md_1",
+                              "section": "1. Overview",
+                              "metadata": {
+                                "doc_title": "kestrel_api_reference.md",
+                                "strategy": "structure",
+                                "section_title": "1. Overview",
+                                "subsection_title": "",
+                                "word_count": 108,
+                                "chunk_index": 1
+                              },
+                              "content": "## 1. Overview\n\n| Environment | Base URL | Data |\n|---|---|---|\n| Sandbox | `https://sandbox.api.kestrel.example/v2` | Synthetic accounts, no real money |\n| Production | `https://api.kestrel.example/v2` | Live member data |\n\nGeneral conventions:\n\n- All requests and responses use JSON with UTF-8 enco…"
+                            },
+                            {
+                              "id": "kestrel_api_reference.md_2",
+                              "section": "2. Authentication",
+                              "metadata": {
+                                "doc_title": "kestrel_api_reference.md",
+                                "section_title": "2. Authentication",
+                                "word_count": 135,
+                                "strategy": "structure",
+                                "chunk_index": 2,
+                                "subsection_title": ""
+                              },
+                              "content": "## 2. Authentication\n\nKestrel uses the OAuth 2.0 client-credentials flow. Each integration is registered in the back-office console and receives a client ID and client secret. Exchange them for an access token at the token endpoint:\n\n```bash\ncurl -X POST https://sandbox.api.kestrel.example/oauth/tok…"
+                            },
+                            {
+                              "id": "kestrel_api_reference.md_3",
+                              "section": "3. Accounts API",
+                              "metadata": {
+                                "strategy": "structure",
+                                "subsection_title": "",
+                                "chunk_index": 3,
+                                "word_count": 107,
+                                "doc_title": "kestrel_api_reference.md",
+                                "section_title": "3. Accounts API"
+                              },
+                              "content": "## 3. Accounts API\n\n| Method | Path | Description |\n|---|---|---|\n| GET | `/accounts` | List accounts visible to the client |\n| GET | `/accounts/{account_id}` | Get one account |\n| GET | `/accounts/{account_id}/balances` | Current, available and pending balances |\n| GET | `/accounts/{account_id}/tra…"
+                            },
+                            {
+                              "id": "kestrel_api_reference.md_4",
+                              "section": "4. Transfers API",
+                              "metadata": {
+                                "chunk_index": 4,
+                                "doc_title": "kestrel_api_reference.md",
+                                "word_count": 39,
+                                "section_title": "4. Transfers API",
+                                "strategy": "structure",
+                                "subsection_title": "4. Transfers API"
+                              },
+                              "content": "## 4. Transfers API\n\nTransfers move money out of a member's account over one of four rails. Creating a transfer is asynchronous: the API returns immediately with a status, and the final outcome arrives by webhook or by polling."
+                            }
+                          ]
+                        }
+                      }
+                    }
+                  ],
+                  "role": "user"
+                }
+              },
+              {
+                "author": "rag_lab",
+                "usage_metadata": {
+                  "cached_content_token_count": 0,
+                  "candidates_token_count": 1054,
+                  "prompt_token_count": 3484,
+                  "thoughts_token_count": 200,
+                  "total_token_count": 4538
+                },
+                "model_version": "gemini-2.5-flash"
+              }
+            ]
+          },
+          "creation_timestamp": 1793140750.236673
+        },
+        {
+          "invocation_id": "e-30cf52a0-e6ab-4682-a05c-9c3c4aacfdff",
+          "user_content": {
+            "parts": [
+              {
+                "text": "compare_retrieval()"
+              }
+            ],
+            "role": "user"
+          },
+          "final_response": {
+            "parts": [
+              {
+                "text": "To compare retrieval, I need a `query`. What would you like to search for?"
+              }
+            ],
+            "role": "model"
+          },
+          "intermediate_data": {
+            "invocation_events": [
+              {
+                "author": "rag_lab",
+                "usage_metadata": {
+                  "cached_content_token_count": 2139,
+                  "candidates_token_count": 82,
+                  "prompt_token_count": 4310,
+                  "thoughts_token_count": 64,
+                  "total_token_count": 4392
+                },
+                "model_version": "gemini-2.5-flash"
+              }
+            ]
+          },
+          "creation_timestamp": 1793140811.297109
+        },
+        {
+          "invocation_id": "e-332e94b2-f175-428b-bfb3-707b9837b548",
+          "user_content": {
+            "parts": [
+              {
+                "text": "fund transfer api docs"
+              }
+            ],
+            "role": "user"
+          },
+          "final_response": {
+            "parts": [
+              {
+                "text": "Here's how the different collections and retrievers performed for the query \"fund transfer api docs\":\n\n| Rank | character__text-embedding-005 (semantic) | character__text-embedding-005 (bm25) | character__text-embedding-005 (hybrid) | structure__gemini-embedding-001 (semantic) | structure__gemini-embedding-001 (bm25) | structure__gemini-embedding-001 (hybrid) | structure__text-embedding-005 (semantic) | structure__text-embedding-005 (bm25) | structure__text-embedding-005 (hybrid) |\n| :-- | :--------------------------------------- | :------------------------------------ | :-------------------------------------- | :----------------------------------------- | :------------------------------------ | :------------------------------------- | :--------------------------------------- | :------------------------------------ | :-------------------------------------- |\n| 1 | kestrel_api_reference.md \\| chars 2700-3200 | kestrel_api_reference.md \\| chars 2700-3200 | kestrel_api_reference.md \\| chars 2700-3200 | **kestrel_api_reference.md \\| 4. Transfers API** | **kestrel_api_reference.md \\| 4. Transfers API** | **kestrel_api_reference.md \\| 4. Transfers API** | **kestrel_api_reference.md \\| 4. Transfers API** | **kestrel_api_reference.md \\| 4. Transfers API** | **kestrel_api_reference.md \\| 4. Transfers API** |\n| 2 | kestrel_api_reference.md \\| chars 1800-2300 | kestrel_api_reference.md \\| chars 1800-2300 | kestrel_api_reference.md \\| chars 1800-2300 | kestrel_api_reference.md \\| 4. Transfers API > 4.1 Create a transfer | kestrel_api_reference.md \\| 4. Transfers API > 4.2 Transfer lifecycle | kestrel_api_reference.md \\| Kestrel API Reference (v2) | kestrel_api_reference.md \\| 4. Transfers API > 4.3 Retrieve and cancel | kestrel_api_reference.md \\| 4. Transfers API > 4.2 Transfer lifecycle | kestrel_api_reference.md \\| 4. Transfers API > 4.3 Retrieve and cancel |\n| 3 | kestrel_api_reference.md \\| chars 3600-4100 | kestrel_api_reference.md \\| chars 0-500 | kestrel_api_reference.md \\| chars 0-500 | kestrel_api_reference.md \\| 1. Overview | kestrel_api_reference.md \\| 4. Transfers API > 4.3 Retrieve and cancel | kestrel_api_reference.md \\| 4. Transfers API > 4.1 Create a transfer | kestrel_api_reference.md \\| Kestrel API Reference (v2) | kestrel_api_reference.md \\| 4. Transfers API > 4.3 Retrieve and cancel | kestrel_api_reference.md \\| Kestrel API Reference (v2) |\n| 4 | kestrel_api_reference.md \\| chars 0-500 | kestrel_api_reference.md \\| chars 5850-6350 | kestrel_api_reference.md \\| chars 5400-5900 | kestrel_api_reference.md \\| Kestrel API Reference (v2) | kestrel_api_reference.md \\| Kestrel API Reference (v2) | kestrel_api_reference.md \\| 4. Transfers API > 4.2 Transfer lifecycle | kestrel_api_reference.md \\| 3. Accounts API | kestrel_api_reference.md \\| Kestrel API Reference (v2) | kestrel_api_reference.md \\| 4. Transfers API > 4.1 Create a transfer |\n| 5 | kestrel_api_reference.md \\| chars 3150-3650 | kestrel_api_reference.md \\| chars 5400-5900 | kestrel_api_reference.md \\| chars 3150-3650 | kestrel_api_reference.md \\| 7. Error Codes | project_heron_timeline.md \\| 4. Phase Details > Phase 2 — Payments and API | kestrel_api_reference.md \\| 4. Transfers API > 4.3 Retrieve and cancel | kestrel_api_reference.md \\| 4. Transfers API > 4.1 Create a transfer | project_heron_timeline.md \\| 4. Phase Details > Phase 2 — Payments and API | kestrel_api_reference.md \\| 3. Accounts API |\n\n**Analysis:**\n\n*   **Structure vs. Character Chunking:** The collections using the `structure` strategy (`structure__gemini-embedding-001` and `structure__text-embedding-005`) consistently returned the most relevant chunk, \"4. Transfers API,\" at rank 1 across all retriever types. This is because the `structure` strategy preserves semantic units like sections, making it easier for retrievers to pinpoint relevant information. The `character` strategy, by contrast, breaks documents into fixed-size segments, which can split important sections. This explains why the `character__text-embedding-005` collection returned less precise chunks at the top ranks, often pulling in snippets that were only tangentially related to transfers.\n\n*   **Embedders:** Both `gemini-embedding-001` and `text-embedding-005` performed well with the `structure` chunking, demonstrating their ability to understand the query's meaning. While `gemini-embedding-001` is generally considered higher quality, for this specific query, both performed similarly when paired with effective chunking.\n\n*   **Retrievers (Semantic, BM25, Hybrid):**\n    *   **Semantic:** As expected, semantic retrieval performed well in identifying the \"Transfers API\" section due to its understanding of the query's meaning, even if the exact keywords weren't present in the chunk.\n    *   **BM25:** BM25 also successfully identified \"Transfers API\" because the keywords \"transfer\" and \"API\" are present. However, with the `character` strategy, its top results were less focused.\n    *   **Hybrid:** The hybrid retriever, combining both semantic and BM25, generally performed on par with the best of the individual retrievers for each collection. It leverages the strengths of both, which is particularly beneficial when queries might contain both exact keywords and require semantic understanding.\n\n**Next Experiment:**\n\nTry posing a more nuanced or paraphrased question to see if the higher-quality `gemini-embedding-001` embedder shows a more significant advantage. For example, \"How do I move money between accounts?\" or \"What are the payment processing options?\"."
+              }
+            ],
+            "role": "model"
+          },
+          "intermediate_data": {
+            "invocation_events": [
+              {
+                "author": "rag_lab",
+                "content": {
+                  "parts": [
+                    {
+                      "function_call": {
+                        "id": "call_eb1b8be1b3bd418180aa1247eed0",
+                        "args": {
+                          "query": "fund transfer api docs"
+                        },
+                        "name": "compare_retrieval"
+                      },
+                      "thought_signature": "AY89a198XhWj6MGJ8Qk7sQprPArq3tdlrsCDTHGKUbGDR2zp_Nf0Rlb_bpFpZTpdhG_hIFAhWKtdDuR96H9vCrgrjCJ076pxzXD_0AMuHY4XjG99Z14PneWGUkoStAEK3OG3tq8zgbH6tIoh-PEsAQYZ4ja2KnxtB8BamdLgZELGL3aP1j1oxvwPTN9kXr0fecP7ZJt6dygKmt2BJIyuqRjj_paLDMJipHk4CJGTHnJyM1_FskEuISGIcVupFkv-1J_EBge3yRg_MNuSm6NZHPFSyfl-X6ivKDYNKiPvinRhEyN65sPybh8IPNxmTO9o8Lv3-0xdTkEj6UvFEr0kJ6tTn30WSrzc9vkKZODyhVlEzp9MRoXLheK5F5oi9xLdm44PjoJ8b-2pxuTZ5uEG-8o9iBz-0VvCt0IGBp4RIM45vlgej5A_27od11Yefq1N8mpPhmbv9gJ7gA3uurvMWUZmInGb1N9E2JngtJyRMspPJx7YNH0vNgVs_guNOP31HFYi9fxKK0gC6w-2_DZZT2GIczgIKclSYfEK7I0YU7HdCCfoy8-Kd-j4BbEIyIbw68Ps_-47j50T5IAlVzqCXdc2gvC8aVhhQhtKB0U0I9uXbwCcpoNZJ2kA-QKV2HhCNZFTdKa3nJoYs0YBjPG7QyFlun1-P4djVj6Z3W6BHac5SgQMc-9sEE-ko9gU2d0cgjT6G-7QA_Zu8o1muhYsy3D70rn0N4-4WQ_mfu6tV33We6xb4i8OcZR6YSLHLmmBQgBXnkc8n9-0dtJe9aNqGO7hiGrFUQWlg7nMWd-zQXLg6EL08z6aPiw2ZLQjpW7stucONGgftbRE27ZCuiE7oGJrWkXg-5HhOLBlQsbRv0WnT40R8Hh_J_S-sWizw7krmGI8h5mOZQhpK9u0xLuLbcHqRTMwzxZlRMuhIWZY3laPj7LKmBOgXQgBLbY7VxH0yjYz8ai1rL40QHcXl_4XA3Rvu5CitnGK9MOG2TFAyzfuMXae6yaWFZWvqtTH9hTjXO03OClnkuDDnAnRdKHFBAxn1iRJOCXWSWtZyFSiNljLMwu9EvgQL94Gpi4yz_7N6-qtmZxv3qZ19ZUlsNkJFCUTbF0FAcurUuB-kMFIz0RlenFmGZZ8DOmhN0IEmsejhiXZdULirRrGZq7Ozgn3A2sTvuXmW6wdPuI4zWNRmMfARI9cjKS5jd8T5InVUoYjP6aEMtXmPz2I-D_GaNz4ds3Zj_4Qr3G0xJRZFIzp6THl7YsfVdNK5Rr2y5A-NA4-YwWYqf_qWQB8uNPdoK0GvS6c_DAS2uYV5yjAqSvBwvNWHWwrmz5VsDG1yPWQ-b4t_L73uTX50kh2qNSefCdBFEGh4LojrilfVaOxx1PGl8FUFYajDPzzsM-VfTXweuYumMPMHfWGidzUKmyFqu7wUB33wLDU6mFroxXA3EHMVaIdTKEeOcjMg0KoXY0ccw=="
+                    }
+                  ],
+                  "role": "model"
+                },
+                "usage_metadata": {
+                  "cached_content_token_count": 0,
+                  "candidates_token_count": 283,
+                  "prompt_token_count": 4332,
+                  "thoughts_token_count": 263,
+                  "total_token_count": 4615
+                },
+                "model_version": "gemini-2.5-flash"
+              },
+              {
+                "author": "rag_lab",
+                "content": {
+                  "parts": [
+                    {
+                      "function_response": {
+                        "id": "call_eb1b8be1b3bd418180aa1247eed0",
+                        "name": "compare_retrieval",
+                        "response": {
+                          "query": "fund transfer api docs",
+                          "grid": [
+                            {
+                              "collection": "character__text-embedding-005",
+                              "retriever": "semantic",
+                              "results": [
+                                {
+                                  "rank": 1,
+                                  "id": "kestrel_api_reference.md_6",
+                                  "score": 0.271583,
+                                  "doc_title": "kestrel_api_reference.md",
+                                  "section": "chars 2700-3200",
+                                  "content": "ponse:\n\n```json\n{\n  \"account_id\": \"acc_7Hq2Lm9Pz\",\n  \"currency\": \"USD\",\n  \"current\": {\"value\": \"4210.55\", \"currency\": \"U…"
+                                },
+                                {
+                                  "rank": 2,
+                                  "id": "kestrel_api_reference.md_4",
+                                  "score": 0.324623,
+                                  "doc_title": "kestrel_api_reference.md",
+                                  "section": "chars 1800-2300",
+                                  "content": "ot issued for the client-credentials flow. Send the token in the `Authorization: Bearer <token>` header on every call.\n\n…"
+                                },
+                                {
+                                  "rank": 3,
+                                  "id": "kestrel_api_reference.md_8",
+                                  "score": 0.332206,
+                                  "doc_title": "kestrel_api_reference.md",
+                                  "section": "chars 3600-4100",
+                                  "content": "s with error `KST-4090`.\n\nRequest body fields:\n\n| Field | Required | Notes |\n|---|---|---|\n| `source_account_id` | yes |…"
+                                },
+                                {
+                                  "rank": 4,
+                                  "id": "kestrel_api_reference.md_0",
+                                  "score": 0.351085,
+                                  "doc_title": "kestrel_api_reference.md",
+                                  "section": "chars 0-500",
+                                  "content": "# Kestrel API Reference (v2)\n\n> **Fictional sample document.** Kestrel and every endpoint, error code and value in this …"
+                                },
+                                {
+                                  "rank": 5,
+                                  "id": "kestrel_api_reference.md_7",
+                                  "score": 0.356448,
+                                  "doc_title": "kestrel_api_reference.md",
+                                  "section": "chars 3150-3650",
+                                  "content": "tus, and the final outcome arrives by webhook or by polling.\n\n### 4.1 Create a transfer\n\n`POST /transfers` requires the …"
+                                }
+                              ]
+                            },
+                            {
+                              "collection": "character__text-embedding-005",
+                              "retriever": "bm25",
+                              "results": [
+                                {
+                                  "rank": 1,
+                                  "id": "kestrel_api_reference.md_6",
+                                  "score": 4.200268,
+                                  "doc_title": "kestrel_api_reference.md",
+                                  "section": "chars 2700-3200",
+                                  "content": "ponse:\n\n```json\n{\n  \"account_id\": \"acc_7Hq2Lm9Pz\",\n  \"currency\": \"USD\",\n  \"current\": {\"value\": \"4210.55\", \"currency\": \"U…"
+                                },
+                                {
+                                  "rank": 2,
+                                  "id": "kestrel_api_reference.md_4",
+                                  "score": 3.183953,
+                                  "doc_title": "kestrel_api_reference.md",
+                                  "section": "chars 1800-2300",
+                                  "content": "ot issued for the client-credentials flow. Send the token in the `Authorization: Bearer <token>` header on every call.\n\n…"
+                                },
+                                {
+                                  "rank": 3,
+                                  "id": "kestrel_api_reference.md_0",
+                                  "score": 2.847343,
+                                  "doc_title": "kestrel_api_reference.md",
+                                  "section": "chars 0-500",
+                                  "content": "# Kestrel API Reference (v2)\n\n> **Fictional sample document.** Kestrel and every endpoint, error code and value in this …"
+                                },
+                                {
+                                  "rank": 4,
+                                  "id": "kestrel_api_reference.md_13",
+                                  "score": 2.787378,
+                                  "doc_title": "kestrel_api_reference.md",
+                                  "section": "chars 5850-6350",
+                                  "content": "uled ACH and wire transfers can be cancelled.\n\n## 5. Webhooks\n\nWebhooks notify your system when something happens, so yo…"
+                                },
+                                {
+                                  "rank": 5,
+                                  "id": "kestrel_api_reference.md_12",
+                                  "score": 2.487881,
+                                  "doc_title": "kestrel_api_reference.md",
+                                  "section": "chars 5400-5900",
+                                  "content": " `failed` with error `KST-4229`.\n\n### 4.3 Retrieve and cancel\n\n`GET /transfers/{transfer_id}` returns the current state,…"
+                                }
+                              ]
+                            },
+                            {
+                              "collection": "character__text-embedding-005",
+                              "retriever": "hybrid",
+                              "results": [
+                                {
+                                  "rank": 1,
+                                  "id": "kestrel_api_reference.md_6",
+                                  "score": 0.033333,
+                                  "doc_title": "kestrel_api_reference.md",
+                                  "section": "chars 2700-3200",
+                                  "content": "ponse:\n\n```json\n{\n  \"account_id\": \"acc_7Hq2Lm9Pz\",\n  \"currency\": \"USD\",\n  \"current\": {\"value\": \"4210.55\", \"currency\": \"U…"
+                                },
+                                {
+                                  "rank": 2,
+                                  "id": "kestrel_api_reference.md_4",
+                                  "score": 0.032787,
+                                  "doc_title": "kestrel_api_reference.md",
+                                  "section": "chars 1800-2300",
+                                  "content": "ot issued for the client-credentials flow. Send the token in the `Authorization: Bearer <token>` header on every call.\n\n…"
+                                },
+                                {
+                                  "rank": 3,
+                                  "id": "kestrel_api_reference.md_0",
+                                  "score": 0.032002,
+                                  "doc_title": "kestrel_api_reference.md",
+                                  "section": "chars 0-500",
+                                  "content": "# Kestrel API Reference (v2)\n\n> **Fictional sample document.** Kestrel and every endpoint, error code and value in this …"
+                                },
+                                {
+                                  "rank": 4,
+                                  "id": "kestrel_api_reference.md_12",
+                                  "score": 0.030777,
+                                  "doc_title": "kestrel_api_reference.md",
+                                  "section": "chars 5400-5900",
+                                  "content": " `failed` with error `KST-4229`.\n\n### 4.3 Retrieve and cancel\n\n`GET /transfers/{transfer_id}` returns the current state,…"
+                                },
+                                {
+                                  "rank": 5,
+                                  "id": "kestrel_api_reference.md_7",
+                                  "score": 0.030777,
+                                  "doc_title": "kestrel_api_reference.md",
+                                  "section": "chars 3150-3650",
+                                  "content": "tus, and the final outcome arrives by webhook or by polling.\n\n### 4.1 Create a transfer\n\n`POST /transfers` requires the …"
+                                }
+                              ]
+                            },
+                            {
+                              "collection": "structure__gemini-embedding-001",
+                              "retriever": "semantic",
+                              "results": [
+                                {
+                                  "rank": 1,
+                                  "id": "kestrel_api_reference.md_4",
+                                  "score": 0.306716,
+                                  "doc_title": "kestrel_api_reference.md",
+                                  "section": "4. Transfers API",
+                                  "content": "## 4. Transfers API\n\nTransfers move money out of a member's account over one of four rails. Creating a transfer is async…"
+                                },
+                                {
+                                  "rank": 2,
+                                  "id": "kestrel_api_reference.md_5",
+                                  "score": 0.343985,
+                                  "doc_title": "kestrel_api_reference.md",
+                                  "section": "4. Transfers API > 4.1 Create a transfer",
+                                  "content": "### 4.1 Create a transfer\n\n`POST /transfers` requires the `transfers:write` scope and an **`Idempotency-Key` header** co…"
+                                },
+                                {
+                                  "rank": 3,
+                                  "id": "kestrel_api_reference.md_1",
+                                  "score": 0.361423,
+                                  "doc_title": "kestrel_api_reference.md",
+                                  "section": "1. Overview",
+                                  "content": "## 1. Overview\n\n| Environment | Base URL | Data |\n|---|---|---|\n| Sandbox | `https://sandbox.api.kestrel.example/v2` | S…"
+                                },
+                                {
+                                  "rank": 4,
+                                  "id": "kestrel_api_reference.md_0",
+                                  "score": 0.370072,
+                                  "doc_title": "kestrel_api_reference.md",
+                                  "section": "Kestrel API Reference (v2)",
+                                  "content": "# Kestrel API Reference (v2)\n\n> **Fictional sample document.** Kestrel and every endpoint, error code and value in this …"
+                                },
+                                {
+                                  "rank": 5,
+                                  "id": "kestrel_api_reference.md_10",
+                                  "score": 0.377527,
+                                  "doc_title": "kestrel_api_reference.md",
+                                  "section": "7. Error Codes",
+                                  "content": "## 7. Error Codes\n\nErrors return a JSON body with `code`, `message` and `request_id`.\n\n| Code | HTTP | Name | What to do…"
+                                }
+                              ]
+                            },
+                            {
+                              "collection": "structure__gemini-embedding-001",
+                              "retriever": "bm25",
+                              "results": [
+                                {
+                                  "rank": 1,
+                                  "id": "kestrel_api_reference.md_4",
+                                  "score": 3.835751,
+                                  "doc_title": "kestrel_api_reference.md",
+                                  "section": "4. Transfers API",
+                                  "content": "## 4. Transfers API\n\nTransfers move money out of a member's account over one of four rails. Creating a transfer is async…"
+                                },
+                                {
+                                  "rank": 2,
+                                  "id": "kestrel_api_reference.md_6",
+                                  "score": 2.258992,
+                                  "doc_title": "kestrel_api_reference.md",
+                                  "section": "4. Transfers API > 4.2 Transfer lifecycle",
+                                  "content": "### 4.2 Transfer lifecycle\n\n| Status | Meaning |\n|---|---|\n| `pending` | Accepted, not yet submitted to the rail; can st…"
+                                },
+                                {
+                                  "rank": 3,
+                                  "id": "kestrel_api_reference.md_7",
+                                  "score": 2.229472,
+                                  "doc_title": "kestrel_api_reference.md",
+                                  "section": "4. Transfers API > 4.3 Retrieve and cancel",
+                                  "content": "### 4.3 Retrieve and cancel\n\n`GET /transfers/{transfer_id}` returns the current state, including the rail reference numb…"
+                                },
+                                {
+                                  "rank": 4,
+                                  "id": "kestrel_api_reference.md_0",
+                                  "score": 2.125173,
+                                  "doc_title": "kestrel_api_reference.md",
+                                  "section": "Kestrel API Reference (v2)",
+                                  "content": "# Kestrel API Reference (v2)\n\n> **Fictional sample document.** Kestrel and every endpoint, error code and value in this …"
+                                },
+                                {
+                                  "rank": 5,
+                                  "id": "project_heron_timeline.md_7",
+                                  "score": 1.971188,
+                                  "doc_title": "project_heron_timeline.md",
+                                  "section": "4. Phase Details > Phase 2 — Payments and API",
+                                  "content": "### Phase 2 — Payments and API\n\nOwner: Tomás Reyes. Phase 2 connected Kestrel to the ACH operator, Fedwire, and the RTP …"
+                                }
+                              ]
+                            },
+                            {
+                              "collection": "structure__gemini-embedding-001",
+                              "retriever": "hybrid",
+                              "results": [
+                                {
+                                  "rank": 1,
+                                  "id": "kestrel_api_reference.md_4",
+                                  "score": 0.033333,
+                                  "doc_title": "kestrel_api_reference.md",
+                                  "section": "4. Transfers API",
+                                  "content": "## 4. Transfers API\n\nTransfers move money out of a member's account over one of four rails. Creating a transfer is async…"
+                                },
+                                {
+                                  "rank": 2,
+                                  "id": "kestrel_api_reference.md_0",
+                                  "score": 0.031746,
+                                  "doc_title": "kestrel_api_reference.md",
+                                  "section": "Kestrel API Reference (v2)",
+                                  "content": "# Kestrel API Reference (v2)\n\n> **Fictional sample document.** Kestrel and every endpoint, error code and value in this …"
+                                },
+                                {
+                                  "rank": 3,
+                                  "id": "kestrel_api_reference.md_5",
+                                  "score": 0.031545,
+                                  "doc_title": "kestrel_api_reference.md",
+                                  "section": "4. Transfers API > 4.1 Create a transfer",
+                                  "content": "### 4.1 Create a transfer\n\n`POST /transfers` requires the `transfers:write` scope and an **`Idempotency-Key` header** co…"
+                                },
+                                {
+                                  "rank": 4,
+                                  "id": "kestrel_api_reference.md_6",
+                                  "score": 0.031319,
+                                  "doc_title": "kestrel_api_reference.md",
+                                  "section": "4. Transfers API > 4.2 Transfer lifecycle",
+                                  "content": "### 4.2 Transfer lifecycle\n\n| Status | Meaning |\n|---|---|\n| `pending` | Accepted, not yet submitted to the rail; can st…"
+                                },
+                                {
+                                  "rank": 5,
+                                  "id": "kestrel_api_reference.md_7",
+                                  "score": 0.031281,
+                                  "doc_title": "kestrel_api_reference.md",
+                                  "section": "4. Transfers API > 4.3 Retrieve and cancel",
+                                  "content": "### 4.3 Retrieve and cancel\n\n`GET /transfers/{transfer_id}` returns the current state, including the rail reference numb…"
+                                }
+                              ]
+                            },
+                            {
+                              "collection": "structure__text-embedding-005",
+                              "retriever": "semantic",
+                              "results": [
+                                {
+                                  "rank": 1,
+                                  "id": "kestrel_api_reference.md_4",
+                                  "score": 0.246101,
+                                  "doc_title": "kestrel_api_reference.md",
+                                  "section": "4. Transfers API",
+                                  "content": "## 4. Transfers API\n\nTransfers move money out of a member's account over one of four rails. Creating a transfer is async…"
+                                },
+                                {
+                                  "rank": 2,
+                                  "id": "kestrel_api_reference.md_7",
+                                  "score": 0.321223,
+                                  "doc_title": "kestrel_api_reference.md",
+                                  "section": "4. Transfers API > 4.3 Retrieve and cancel",
+                                  "content": "### 4.3 Retrieve and cancel\n\n`GET /transfers/{transfer_id}` returns the current state, including the rail reference numb…"
+                                },
+                                {
+                                  "rank": 3,
+                                  "id": "kestrel_api_reference.md_0",
+                                  "score": 0.330087,
+                                  "doc_title": "kestrel_api_reference.md",
+                                  "section": "Kestrel API Reference (v2)",
+                                  "content": "# Kestrel API Reference (v2)\n\n> **Fictional sample document.** Kestrel and every endpoint, error code and value in this …"
+                                },
+                                {
+                                  "rank": 4,
+                                  "id": "kestrel_api_reference.md_3",
+                                  "score": 0.350456,
+                                  "doc_title": "kestrel_api_reference.md",
+                                  "section": "3. Accounts API",
+                                  "content": "## 3. Accounts API\n\n| Method | Path | Description |\n|---|---|---|\n| GET | `/accounts` | List accounts visible to the cli…"
+                                },
+                                {
+                                  "rank": 5,
+                                  "id": "kestrel_api_reference.md_5",
+                                  "score": 0.354604,
+                                  "doc_title": "kestrel_api_reference.md",
+                                  "section": "4. Transfers API > 4.1 Create a transfer",
+                                  "content": "### 4.1 Create a transfer\n\n`POST /transfers` requires the `transfers:write` scope and an **`Idempotency-Key` header** co…"
+                                }
+                              ]
+                            },
+                            {
+                              "collection": "structure__text-embedding-005",
+                              "retriever": "bm25",
+                              "results": [
+                                {
+                                  "rank": 1,
+                                  "id": "kestrel_api_reference.md_4",
+                                  "score": 3.835751,
+                                  "doc_title": "kestrel_api_reference.md",
+                                  "section": "4. Transfers API",
+                                  "content": "## 4. Transfers API\n\nTransfers move money out of a member's account over one of four rails. Creating a transfer is async…"
+                                },
+                                {
+                                  "rank": 2,
+                                  "id": "kestrel_api_reference.md_6",
+                                  "score": 2.258992,
+                                  "doc_title": "kestrel_api_reference.md",
+                                  "section": "4. Transfers API > 4.2 Transfer lifecycle",
+                                  "content": "### 4.2 Transfer lifecycle\n\n| Status | Meaning |\n|---|---|\n| `pending` | Accepted, not yet submitted to the rail; can st…"
+                                },
+                                {
+                                  "rank": 3,
+                                  "id": "kestrel_api_reference.md_7",
+                                  "score": 2.229472,
+                                  "doc_title": "kestrel_api_reference.md",
+                                  "section": "4. Transfers API > 4.3 Retrieve and cancel",
+                                  "content": "### 4.3 Retrieve and cancel\n\n`GET /transfers/{transfer_id}` returns the current state, including the rail reference numb…"
+                                },
+                                {
+                                  "rank": 4,
+                                  "id": "kestrel_api_reference.md_0",
+                                  "score": 2.125173,
+                                  "doc_title": "kestrel_api_reference.md",
+                                  "section": "Kestrel API Reference (v2)",
+                                  "content": "# Kestrel API Reference (v2)\n\n> **Fictional sample document.** Kestrel and every endpoint, error code and value in this …"
+                                },
+                                {
+                                  "rank": 5,
+                                  "id": "project_heron_timeline.md_7",
+                                  "score": 1.971188,
+                                  "doc_title": "project_heron_timeline.md",
+                                  "section": "4. Phase Details > Phase 2 — Payments and API",
+                                  "content": "### Phase 2 — Payments and API\n\nOwner: Tomás Reyes. Phase 2 connected Kestrel to the ACH operator, Fedwire, and the RTP …"
+                                }
+                              ]
+                            },
+                            {
+                              "collection": "structure__text-embedding-005",
+                              "retriever": "hybrid",
+                              "results": [
+                                {
+                                  "rank": 1,
+                                  "id": "kestrel_api_reference.md_4",
+                                  "score": 0.033333,
+                                  "doc_title": "kestrel_api_reference.md",
+                                  "section": "4. Transfers API",
+                                  "content": "## 4. Transfers API\n\nTransfers move money out of a member's account over one of four rails. Creating a transfer is async…"
+                                },
+                                {
+                                  "rank": 2,
+                                  "id": "kestrel_api_reference.md_7",
+                                  "score": 0.032522,
+                                  "doc_title": "kestrel_api_reference.md",
+                                  "section": "4. Transfers API > 4.3 Retrieve and cancel",
+                                  "content": "### 4.3 Retrieve and cancel\n\n`GET /transfers/{transfer_id}` returns the current state, including the rail reference numb…"
+                                },
+                                {
+                                  "rank": 3,
+                                  "id": "kestrel_api_reference.md_0",
+                                  "score": 0.032002,
+                                  "doc_title": "kestrel_api_reference.md",
+                                  "section": "Kestrel API Reference (v2)",
+                                  "content": "# Kestrel API Reference (v2)\n\n> **Fictional sample document.** Kestrel and every endpoint, error code and value in this …"
+                                },
+                                {
+                                  "rank": 4,
+                                  "id": "kestrel_api_reference.md_5",
+                                  "score": 0.030777,
+                                  "doc_title": "kestrel_api_reference.md",
+                                  "section": "4. Transfers API > 4.1 Create a transfer",
+                                  "content": "### 4.1 Create a transfer\n\n`POST /transfers` requires the `transfers:write` scope and an **`Idempotency-Key` header** co…"
+                                },
+                                {
+                                  "rank": 5,
+                                  "id": "kestrel_api_reference.md_3",
+                                  "score": 0.029958,
+                                  "doc_title": "kestrel_api_reference.md",
+                                  "section": "3. Accounts API",
+                                  "content": "## 3. Accounts API\n\n| Method | Path | Description |\n|---|---|---|\n| GET | `/accounts` | List accounts visible to the cli…"
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      }
+                    }
+                  ],
+                  "role": "user"
+                }
+              },
+              {
+                "author": "rag_lab",
+                "usage_metadata": {
+                  "cached_content_token_count": 0,
+                  "candidates_token_count": 1858,
+                  "prompt_token_count": 7969,
+                  "thoughts_token_count": 275,
+                  "total_token_count": 9827
+                },
+                "model_version": "gemini-2.5-flash"
+              }
+            ]
+          },
+          "creation_timestamp": 1793140844.531477
+        },
+        {
+          "invocation_id": "e-65afbfb4-1e98-4d15-8d0d-bd68778faccb",
+          "user_content": {
+            "parts": [
+              {
+                "text": "What are the payment processing options?"
+              }
+            ],
+            "role": "user"
+          },
+          "final_response": {
+            "parts": [
+              {
+                "text": "Kestrel supports the following payment processing options:\n\n*   **Book transfers:** Settle instantly between accounts at the same institution.\n*   **ACH payments:** Sent in same-day windows with submission cutoffs at 10:30 and 14:45 Eastern Time.\n*   **Wires:** Sent through Fedwire with a cutoff of 17:00 Eastern Time on business days.\n*   **Instant payments:** (RTP and FedNow) Settle in seconds, 24/7, with a default limit of $25,000 per transaction.\n\nDefault daily outgoing limits across all rails combined are $10,000 for retail members and $250,000 for business members. Limit increases require staff approval.\n[Source: kestrel_platform_overview.md, Section: 3. Core Features]\n\nThis information was retrieved from the `structure__gemini-embedding-001` collection, which demonstrates that the `structure` chunking strategy combined with the `gemini-embedding-001` embedder can effectively answer nuanced questions. The semantic understanding of the embedder helped in matching \"payment processing options\" to the \"Payments\" section in the document, even though the exact phrase \"payment processing options\" was not present.\n\n**Next Experiment:**\n\nHow about we compare the retrieval performance for a query that specifically includes a keyword, and see if the BM25 retriever might perform better, or if the hybrid retriever still maintains its lead across all collections? You could try a query like \"KST-4090 error\" or \"Fedwire cutoff\"."
+              }
+            ],
+            "role": "model"
+          },
+          "intermediate_data": {
+            "invocation_events": [
+              {
+                "author": "rag_lab",
+                "content": {
+                  "parts": [
+                    {
+                      "function_call": {
+                        "id": "call_b519a9d815b1435da9072339d782",
+                        "args": {
+                          "query": "What are the payment processing options?",
+                          "collection": "structure__gemini-embedding-001"
+                        },
+                        "name": "answer_question"
+                      },
+                      "thought_signature": "AY89a1-TOoOQmu9Y24OMiwizNud3NGRnwUzqEe7wEoCszLGEPlnPcqg0ya1oYiYe51wwVX0XpQhwP7NWetyN1CQ_612RkmbqMPY0jnauOwEtIFzZAruD3YVmOvVbNTj_f5RbSQn8OW7_Q-E7mxQJcZt9Zom5WtR_igMGi8xsJpZgfSBcrtQJze0vKlXosjmO3tTqzfmBGpslQFJ-JdeuhGTs2MU8NeUfvsIZTUgSyQBZMRtas6keQKt1e1HefRfLM7186EFxsHKgDMNn6Mv4U2SciI0qfHAxibiK7h5m9Kerbx80srCt4GeXW8MKNG9ECFhCW093fZlqDvJ3enlN2skQUceSYm485QFIJrLhS0BwK698cJLBmpSOavqT4dNeqv0m7vk5gBpr8T4yLakq-CkTTKCsemCzsAc_4Ma6qJEmPMJQmyCwOqzYS8EuRHNIeRXkEoCkimE3E2aFXFYwpDTDtSJvUEtKNtB0xmjIx-PzboWmp1jUrA_8L0CAcexEuj0zqXRPG1Q1zm7I5iCjV0CewYaYQ17DAmUy0HJPtIxtJ9RW_DWcNymODyHYAKSljKqTfwdCqErsZXPEMg-kkPipcZ8HKxiEuY6N5WUMA7-lOvoNc18Vg8reXdFTkHUs3_66VegE8ILpSIa57kXnDN0_ULHbeVCJa_vX4lSIhIP7Ks5DrXLbHIzcCISkL0U23Q67m1hyofW_YfhJZUDp0XlFOXLdpUZI25BDoaAfL7UrJe6vL9CcFk2qqchvW-MFE6fdTdjX_EO0R_m_pKN-NMMRBeNm94H1xVobzzJouH7nyG72qk6sBolBJ49LZXNoTzgdW3qcUgsjAbzGOkHrHILSp39vtAk="
+                    }
+                  ],
+                  "role": "model"
+                },
+                "usage_metadata": {
+                  "cached_content_token_count": 0,
+                  "candidates_token_count": 158,
+                  "prompt_token_count": 9296,
+                  "thoughts_token_count": 124,
+                  "total_token_count": 9454
+                },
+                "model_version": "gemini-2.5-flash"
+              },
+              {
+                "author": "rag_lab",
+                "content": {
+                  "parts": [
+                    {
+                      "function_response": {
+                        "id": "call_b519a9d815b1435da9072339d782",
+                        "name": "answer_question",
+                        "response": {
+                          "query": "What are the payment processing options?",
+                          "collection": "structure__gemini-embedding-001",
+                          "retriever": "hybrid",
+                          "chat_model": "gemini-2.5-flash",
+                          "answer": "Kestrel supports four payment rails for processing payments:\n\n*   **Book transfers** between accounts at the same institution, which settle instantly around the clock.\n*   **ACH payments** are sent in same-day ACH windows with submission cutoffs at 10:30 and 14:45 Eastern Time. Submissions after 14:45 are included in the next-day batch.\n*   **Wires** are sent through Fedwire with a cutoff of 17:00 Eastern Time on business days.\n*   **Instant payments** (RTP and FedNow) settle in seconds, 24/7, with a default limit of $25,000 per transaction.\n\nDefault daily outgoing limits across all rails combined are $10,000 for retail members and $250,000 for business members, resetting at midnight Eastern Time. A member can request a temporary limit increase, which requires staff approval in the back-office console.\n[Source: kestrel_platform_overview.md, Section: 3. Core Features]",
+                          "citations": [
+                            "[Source: kestrel_platform_overview.md, Section: 3. Core Features]"
+                          ],
+                          "chunks": [
+                            {
+                              "rank": 1,
+                              "id": "kestrel_platform_overview.md_5",
+                              "score": 0.032051,
+                              "doc_title": "kestrel_platform_overview.md",
+                              "section": "3. Core Features > 3.2 Payments",
+                              "content": "### 3.2 Payments\n\nKestrel supports four payment rails:\n\n- **Book transfers** between accounts at the same institution se…"
+                            },
+                            {
+                              "rank": 2,
+                              "id": "kestrel_platform_overview.md_2",
+                              "score": 0.031319,
+                              "doc_title": "kestrel_platform_overview.md",
+                              "section": "2. Architecture",
+                              "content": "## 2. Architecture\n\nEvery Kestrel service owns its own database and communicates through an event stream. A transfer req…"
+                            },
+                            {
+                              "rank": 3,
+                              "id": "kestrel_platform_overview.md_9",
+                              "score": 0.030798,
+                              "doc_title": "kestrel_platform_overview.md",
+                              "section": "4. Fraud Shield Scoring Rules",
+                              "content": "## 4. Fraud Shield Scoring Rules\n\nRules add points to the model score. The final score determines the action:\n\n| Score |…"
+                            },
+                            {
+                              "rank": 4,
+                              "id": "kestrel_platform_overview.md_7",
+                              "score": 0.029644,
+                              "doc_title": "kestrel_platform_overview.md",
+                              "section": "3. Core Features > 3.4 Lending",
+                              "content": "### 3.4 Lending\n\nThe lending service originates personal loans, auto loans and home-equity lines of credit (HELOCs). App…"
+                            },
+                            {
+                              "rank": 5,
+                              "id": "kestrel_platform_overview.md_4",
+                              "score": 0.029324,
+                              "doc_title": "kestrel_platform_overview.md",
+                              "section": "3. Core Features > 3.1 Accounts and Ledger",
+                              "content": "### 3.1 Accounts and Ledger\n\nThe ledger supports savings, checking (share draft), money market, certificates of deposit …"
+                            }
+                          ]
+                        }
+                      }
+                    }
+                  ],
+                  "role": "user"
+                }
+              },
+              {
+                "author": "rag_lab",
+                "usage_metadata": {
+                  "cached_content_token_count": 0,
+                  "candidates_token_count": 483,
+                  "prompt_token_count": 10051,
+                  "thoughts_token_count": 137,
+                  "total_token_count": 10534
+                },
+                "model_version": "gemini-2.5-flash"
+              }
+            ]
+          },
+          "creation_timestamp": 1793141207.596568
+        }
+      ],
+      "session_input": {
+        "app_name": "rag_agent",
+        "user_id": "user"
+      },
+      "creation_timestamp": 1793141271.89984
+    }
+  ],
+  "creation_timestamp": 1793137535.3066418
+}
